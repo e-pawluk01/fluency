@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* Same palette as Task OS: pure black, off-white text, hairline borders. */
+:root {
+  --background: #000000;
+  --foreground: #e5e5e5;
+  --card: #050505;
+  --muted: #171717;
+  --muted-foreground: #a3a3a3;
+  --border: #262626;
+  --ring: #d4d4d4;
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    background: var(--background);
+    overscroll-behavior: none;
+  }
+  body {
+    @apply text-foreground antialiased selection:bg-white selection:text-black;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+}
+
+@keyframes drain {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@utility animate-rise {
+  animation: rise 220ms ease-out both;
+}
+@utility animate-shake {
+  animation: shake 320ms ease-out;
+}
+@utility animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise, .animate-shake { animation: none; }
+}
